@@ -1,3 +1,4 @@
+# %%
 import matplotlib.pyplot as plt
 import numpy as np
 import mplcyberpunk
@@ -18,15 +19,19 @@ def cria_func(x, x2, A1, A2, intervalo):
 
 def ref_signal(step):
     x1 = np.arange(0, 2, step)
-    y1 = cria_func(0, 2, 0, 5, step)
+    y1 = cria_func(0, 2, 0, 0, step)
     x2 = np.arange(2, 5, step)
-    y2 = cria_func(2, 5, 5, 5, step)
-    x3 = np.arange(5, 7, step)
-    y3 = cria_func(5, 7, 5, 0, step)
+    y2 = cria_func(2, 5, 0, 5, step)
+    x3 = np.arange(5, 10, step)
+    y3 = cria_func(5, 10, 5, 5, step)
+    x4 = np.arange(10, 12, step)
+    y4 = cria_func(10, 12, 5, 0, step)
+    x5 = np.arange(12, 14, step)
+    y5 = cria_func(12, 14, 0, 0, step)
 
     # Concatenate segments
-    x = np.concatenate((x1, x2, x3))
-    y = np.concatenate((y1, y2, y3))
+    x = np.concatenate((x1, x2, x3, x4, x5))
+    y = np.concatenate((y1, y2, y3, y4, y5))
 
     fig, ax = plt.subplots()
     ax.plot(x, y, label="Reference")
@@ -40,4 +45,5 @@ def ref_signal(step):
 
 
 ref_signal(0.005)
+# %% 
 
