@@ -107,47 +107,50 @@ All design decisions are documented and justified.
 
 ## 6. Repository Structure
 
+Current contents of the repository:
+
 ```text
 .
-├── docs/               # Mathematical derivations, design decisions, papers
-│   ├── theory.md
-│   ├── control.md
-│   └── observers.md
+├── docs/
+│   ├── theory.md        # PMSM mathematical model: abc/αβ/dq frames, Clarke/Park, dq electrical model, torque, mechanical dynamics
+│   ├── control.md       # (placeholder, empty)
+│   └── observers.md     # (placeholder, empty)
 │
-├── simulation/         # Python-based motor and control simulation
-│   ├── motor_model.py
-│   ├── control_loops.py
-│   ├── svpwm.py
-│   └── sim_main.py
+├── simulation/
+│   ├── motor_model.py   # PMSMParameters + PMSM class (dq electrical dynamics, torque, mechanical dynamics, step()) and clarke/park/inv_park helpers
+│   ├── simulation.py    # Reference-signal (trapezoidal speed profile) generation and plotting
+│   ├── control.py       # (placeholder, empty)
+│   └── svpwm.py         # (placeholder, empty)
 │
-├── firmware/           # Embedded firmware (STM32)
-│   ├── drivers/
-│   ├── control/
-│   ├── observers/
-│   └── main.c
-│
-├── hardware/           # Schematics, PCB, power stage (future)
-│
+├── LICENSE
 └── README.md
 ```
 
+Planned (not yet in the repository): STM32 firmware (`firmware/`) and power-stage hardware (`hardware/`).
+
+### Running the simulation code
+
+The simulation scripts use Python 3 with `numpy`, `matplotlib` and `mplcyberpunk` (there is no requirements file yet):
+
+```bash
+pip install numpy matplotlib mplcyberpunk
+python3 simulation/simulation.py   # plots the reference signal
+```
+
+`simulation/motor_model.py` provides the `PMSM` model class to be imported by the control-loop simulation.
+
 ## 7. Documentation Approach
 
-All mathematical models, assumptions, and control decisions are documented in Markdown papers under docs/.
+All mathematical models, assumptions, and control decisions are documented in Markdown papers under `docs/`.
 
 The documentation is written as a technical thesis-style record, covering:
 
-Model assumptions
-
-Reference frame choices
-
-Control-loop design rationale
-
-Discretization and timing
-
-Observer structure
-
-Practical implementation constraints
+- Model assumptions
+- Reference frame choices
+- Control-loop design rationale
+- Discretization and timing
+- Observer structure
+- Practical implementation constraints
 
 The goal is full transparency and reproducibility.
 
@@ -155,15 +158,12 @@ The goal is full transparency and reproducibility.
 
 No firmware is written without prior simulation.
 
-The simulation environment:
+The simulation environment is intended to:
 
-Uses fixed-step integration
-
-Mimics real-time control execution
-
-Includes saturation, limits, and delays
-
-Is structured to map directly to embedded code
+- Use fixed-step integration
+- Mimic real-time control execution
+- Include saturation, limits, and delays
+- Be structured to map directly to embedded code
 
 If it does not behave correctly in simulation, it is not deployed to hardware.
 
@@ -173,18 +173,16 @@ This project involves high-power electrical systems.
 
 Improper implementation can cause:
 
-Equipment damage
-
-Fire
-
-Severe injury or death
+- Equipment damage
+- Fire
+- Severe injury or death
 
 This repository is provided for educational and research purposes only.
 The author assumes no responsibility for misuse or unsafe implementations.
 
 ## 10. License
 
-This project is released under an open-source license (to be defined).
+This project is released under the MIT License. See [LICENSE](LICENSE).
 
 ## 11. Status
 
@@ -195,13 +193,10 @@ Early-stage mathematical modeling and simulation phase.
 
 To build a fully open, industrial-quality traction motor controller that:
 
-Is technically rigorous
-
-Is practically usable
-
-Can power a real electric motorcycle
-
-Serves as a reference-quality learning and research platform
+- Is technically rigorous
+- Is practically usable
+- Can power a real electric motorcycle
+- Serves as a reference-quality learning and research platform
 
 “This project is not about making a motor spin.
 It is about understanding and controlling energy, torque, and motion — correctly.”
