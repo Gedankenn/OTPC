@@ -53,3 +53,10 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
